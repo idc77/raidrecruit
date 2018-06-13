@@ -13,9 +13,8 @@ const routes: Routes = [
   {path: 'about', component: AboutComponent},
   {path: 'whoami', component: WhoamiComponent, canActivate: [AuthGuard]},
   {path: 'raids', component: RaidlistComponent},
-  {path: 'raids/new', component: NewraidComponent, canActivate: [AuthGuard]},
-  {path: 'raid/:id', component: RaiddetailComponent }
-
+  {path: 'raids/:id', component: RaiddetailComponent },
+  {path: 'new', component: NewraidComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({

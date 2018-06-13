@@ -1,0 +1,218 @@
+<div class="container">
+  <form (submit)="createRaid()">
+    <fieldset>
+      <legend>Create New Raid</legend>
+      <div class="row">
+        <div class="col-sm-3">
+          <label for="date">
+            What date is the raid going to happen?
+          </label><br>
+          <ngb-datepicker #dp [(ngModel)]="model.date" (navigate)="date = $event.next" name="date"
+                          id="date"></ngb-datepicker>
+        </div>
+        <div class="col-sm-3">
+          <label for="time_start">
+            What time is the raid going to <strong>start</strong>?
+          </label>
+          <ngb-timepicker [(ngModel)]="model.time_start" [seconds]="false" [hourStep]="1" [minuteStep]="15"
+                          name="time_start"
+                          id="time_start"></ngb-timepicker>
+          <br>
+          <label for="time_end">
+            What time is the raid going to <strong>end</strong>?
+          </label>
+          <ngb-timepicker [(ngModel)]="model.time_end" [seconds]="false" [hourStep]="1" [minuteStep]="15"
+                          name="time_end"
+                          id="time_end"></ngb-timepicker>
+        </div>
+        <div class="col-sm-6">
+          <label for="title">Give the raid a meaningful title (e.g. Snoopy's MMIS, Pawbuster, Kor'Sha Raid)
+          </label>
+          <input type="text" [(ngModel)]="model.title" name="title" id="title" class="form-control">
+          <br>
+          <label for="description">
+            Describe the raid.. targets, goals, anything useful, bring potions etc. be at least this high
+          </label>
+          <textarea [(ngModel)]="model.description" name="description" id="description" class="form-control"
+                    rows="15"></textarea>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset>
+    <legend>Raid Setup</legend>
+      <div class="row">
+        <div class="col-sm-3">
+          <h6>MT Group</h6>
+          <div class="card">
+            <div class="card-body">
+              <label for="mt.tank">Tank</label>
+              <input id="mt.tank" name="mt.tank" [(ngModel)]="model.setup.mt.rules.tank" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="mt.templar_or_healer">Templar or Healer</label>
+              <input id="mt.templar_or_healer" name="mt.templar_or_healer" [(ngModel)]="model.setup.mt.rules.templar_or_healer" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="mt.defiler_or_warder">Defiler or Shaman</label>
+              <input id="mt.defiler_or_warder" name="mt.defiler_or_warder" [(ngModel)]="model.setup.mt.rules.defiler_or_warder" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="mt.coercer_or_enchanter">coercer_or_enchanter</label>
+              <input id="mt.coercer_or_enchanter" name="mt.coercer_or_enchanter" [(ngModel)]="model.setup.mt.rules.coercer_or_enchanter" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="mt.dirge_or_bard">dirge_or_bard</label>
+              <input id="mt.dirge_or_bard" name="mt.dirge_or_bard" [(ngModel)]="model.setup.mt.rules.dirge_or_bard" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="mt.swash_or_hatetransfer">swash_or_hatetransfer</label>
+              <input id="mt.swash_or_hatetransfer" name="mt.swash_or_hatetransfer" [(ngModel)]="model.setup.mt.rules.swash_or_hatetransfer" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <h6>OT Group</h6>
+          <div class="card">
+            <div class="card-body">
+              <label for="ot.tank">Tank</label>
+              <input id="ot.tank" name="ot.tank" [(ngModel)]="model.setup.ot.rules.tank" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="ot.cleric_or_healer">cleric_or_healer</label>
+              <input id="ot.cleric_or_healer" name="ot.cleric_or_healer" [(ngModel)]="model.setup.ot.rules.cleric_or_healer" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="ot.shaman_or_healer">shaman_or_healer</label>
+              <input id="ot.shaman_or_healer" name="ot.shaman_or_healer" [(ngModel)]="model.setup.ot.rules.shaman_or_healer" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="ot.coercer_or_enchanter">coercer_or_enchanter</label>
+              <input id="ot.coercer_or_enchanter" name="ot.coercer_or_enchanter" [(ngModel)]="model.setup.ot.rules.coercer_or_enchanter" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="ot.dirge_or_bard">dirge_or_bard</label>
+              <input id="ot.dirge_or_bard" name="ot.dirge_or_bard" [(ngModel)]="model.setup.ot.rules.dirge_or_bard" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="ot.dps_or_hatetransfer">dps_or_hatetransfer</label>
+              <input id="ot.dps_or_hatetransfer" name="ot.dps_or_hatetransfer" [(ngModel)]="model.setup.ot.rules.dps_or_hatetransfer" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <h6>DPS Group</h6>
+          <div class="card">
+            <div class="card-body">
+              <label for="dps_1.bard">bard</label>
+              <input id="dps_1.bard" name="dps_1.bard" [(ngModel)]="model.setup.dps_1.rules.bard" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="dps_1.enchanter">enchanter</label>
+              <input id="dps_1.enchanter" name="dps_1.enchanter" [(ngModel)]="model.setup.dps_1.rules.enchanter" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="dps_1.dps_or_tank">dps_or_tank</label>
+              <input id="dps_1.dps_or_tank" name="dps_1.dps_or_tank" [(ngModel)]="model.setup.dps_1.rules.dps_or_tank" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="dps_1.dps">dps</label>
+              <input id="dps_1.dps" name="dps_1.dps" [(ngModel)]="model.setup.dps_1.rules.dps" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="dps_1.healer_or_dps">healer_or_dps</label>
+              <input id="dps_1.healer_or_dps" name="dps_1.healer_or_dps" [(ngModel)]="model.setup.dps_1.rules.healer_or_dps" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="dps_1.healer">healer</label>
+              <input id="dps_1.healer" name="dps_1.healer" [(ngModel)]="model.setup.dps_1.rules.healer" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <h6>DPS Group</h6>
+          <div class="card">
+            <div class="card-body">
+              <label for="dps_2.bard">bard</label>
+              <input id="dps_2.bard" name="dps_2.bard" [(ngModel)]="model.setup.dps_2.rules.bard" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="dps_2.enchanter">enchanter</label>
+              <input id="dps_2.enchanter" name="dps_2.enchanter" [(ngModel)]="model.setup.dps_2.rules.enchanter" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="dps_2.dps_or_tank">dps_or_tank</label>
+              <input id="dps_2.dps_or_tank" name="dps_2.dps_or_tank" [(ngModel)]="model.setup.dps_2.rules.dps_or_tank" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="dps_2.dps">dps</label>
+              <input id="dps_2.dps" name="dps_2.dps" [(ngModel)]="model.setup.dps_2.rules.dps" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="dps_2.healer_or_dps">healer_or_dps</label>
+              <input id="dps_2.healer_or_dps" name="dps_2.healer_or_dps" [(ngModel)]="model.setup.dps_2.rules.healer_or_dps" class="form-control">
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <label for="dps_2.healer">healer</label>
+              <input id="dps_2.healer" name="dps_2.healer" [(ngModel)]="model.setup.dps_2.rules.healer" class="form-control">
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <fieldset>
+      <legend>
+        Sitters
+      </legend>
+      <div class="form-group">
+        <label for="sitting">
+          How many slots would you like to make available for sitters?
+          Note: They usually have a right to roll on loot because they're available to swap out.
+        </label>
+        <input name="sitsize" type="number" class="form-control" id="sitting" [(ngModel)]="model.setup.sitsize">
+      </div>
+    </fieldset>
+    <div class="form-group">
+      <button class="btn btn-outline-primary btn-block" type="submit">Create This Raid Now</button>
+    </div>
+  </form>
+</div>
