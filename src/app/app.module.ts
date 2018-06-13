@@ -11,7 +11,11 @@ import {OAuthModule} from 'angular-oauth2-oidc';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {AuthInterceptor} from './auth.interceptor';
 import {AuthGuard} from './guards/auth.guard';
-import { ProfileComponent } from './components/profile/profile.component';
+import { WhoamiComponent } from './components/whoami/whoami.component';
+import { RaidlistComponent } from './components/raidlist/raidlist.component';
+import { NewraidComponent } from './components/newraid/newraid.component';
+import {FormsModule} from '@angular/forms';
+import { RaiddetailComponent } from './components/raiddetail/raiddetail.component';
 
 @NgModule({
   declarations: [
@@ -19,17 +23,20 @@ import { ProfileComponent } from './components/profile/profile.component';
     NavbarComponent,
     AboutComponent,
     HomeComponent,
-    ProfileComponent
+    WhoamiComponent,
+    RaidlistComponent,
+    NewraidComponent,
+    RaiddetailComponent
   ],
   imports: [
     BrowserModule,
     NgbModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     OAuthModule.forRoot(),
   ],
   providers: [
-    AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
