@@ -21,7 +21,7 @@ export class RaidService {
   }
 
   create(m: Raid) {
-    return this.http.post(environment.apiroot + '/raids/', m);
+    return this.http.post<Raid>(environment.apiroot + '/raids/', m);
   }
 
   update(id: string, m: Raid) {
@@ -35,6 +35,7 @@ export class RaidService {
 
 export class Raid {
   id: string;
+  title: string;
   keycloak_id?: string;
   date_meet?: Date;
   date_start: Date;

@@ -16,6 +16,7 @@ import { RaidlistComponent } from './components/raidlist/raidlist.component';
 import { NewraidComponent } from './components/newraid/newraid.component';
 import {FormsModule} from '@angular/forms';
 import { RaiddetailComponent } from './components/raiddetail/raiddetail.component';
+import { RaideditComponent } from './components/raidedit/raidedit.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { RaiddetailComponent } from './components/raiddetail/raiddetail.componen
     WhoamiComponent,
     RaidlistComponent,
     NewraidComponent,
-    RaiddetailComponent
+    RaiddetailComponent,
+    RaideditComponent
   ],
   imports: [
     BrowserModule,

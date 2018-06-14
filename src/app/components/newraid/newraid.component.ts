@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 export class NewraidComponent implements OnInit {
   date: { year: number, month: number };
   model: any = {
+    title: '',
     date: {},
     time_start: {hour: 19, minute: 0},
     time_end: {hour: 22, minute: 0},
@@ -120,6 +121,7 @@ export class NewraidComponent implements OnInit {
     n.date_end = new Date(m.date.year, m.date.month, m.date.day, m.time_end.hour, m.time_end.minute);
     n.description = m.description;
     n.setup = m.setup;
+    n.title = m.title;
     return n;
   }
 

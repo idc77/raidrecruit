@@ -7,13 +7,15 @@ import {AuthGuard} from './guards/auth.guard';
 import {NewraidComponent} from './components/newraid/newraid.component';
 import {RaidlistComponent} from './components/raidlist/raidlist.component';
 import {RaiddetailComponent} from './components/raiddetail/raiddetail.component';
+import {RaideditComponent} from './components/raidedit/raidedit.component';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
+  {path: '', redirectTo: 'raids', pathMatch: 'full'},
   {path: 'about', component: AboutComponent},
   {path: 'whoami', component: WhoamiComponent, canActivate: [AuthGuard]},
   {path: 'raids', component: RaidlistComponent},
-  {path: 'raids/:id', component: RaiddetailComponent },
+  {path: 'raids/:id', component: RaiddetailComponent},
+  {path: 'raids/:id/edit', component: RaideditComponent},
   {path: 'new', component: NewraidComponent, canActivate: [AuthGuard]}
 ];
 
