@@ -1,0 +1,575 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>{{raid.title}}</h1>
+      <div class="text-right" *ngIf="raid.keycloak_id === user_id">
+        <button class="btn btn-outline-danger" (click)="removeRaid()">Delete Raid</button>
+      </div>
+      <p style="white-space: pre-line;">{{raid.description}}</p>
+      <div>Meet at {{raid.date_meet|date:'full'}}</div>
+      <div>Ends at {{raid.date_end|date:'full'}}</div>
+      <hr>
+    </div>
+  </div>
+  <div class="row" *ngIf="user_id !== null">
+    <div class="col-md-2 col-sm-6" *ngFor="let raider of raiders">
+      <div class="card" (click)="selectRaider(raider)" [class.bg-light]="selected_raider != raider" [class.bg-secondary]="selected_raider == raider"
+           [class.border-success]="selected_raider == raider" [class.border]="selected_raider == raider">
+        <div class="card-body">
+          <img class="card-img-top" [src]="'https://census.daybreakgames.com/s:contested/img/eq2/character/' + raider.character.id + '/headshot'" alt="headshot">
+        </div>
+        <div class="card-img-overlay">
+          <h6 class="card-title">
+            {{raider.character.displayname}}
+          </h6>
+        </div>
+        <div class="card-text text-center">
+          {{raider.character.type.class}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr *ngIf="user_id !== null">
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-md-3">
+          <h3 class="text-center">MT Group</h3>
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.mt.rules.tank}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.mt.tank !== ''">{{raid.setup.mt.tank}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.mt.tank === '' && selected_raider !== null && isRole(raid.setup.mt.rules.tank) && !isSigned()"
+                      (click)="joinRaid('mt.tank')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.mt.tank === selected_raider.character.displayname" (click)="leaveRaid('mt.tank')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.mt.tank !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('mt.tank')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.mt.rules.dirge_or_bard}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.mt.dirge_or_bard !== ''">{{raid.setup.mt.dirge_or_bard}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.mt.dirge_or_bard === '' && selected_raider !== null && isRole(raid.setup.mt.rules.dirge_or_bard) && !isSigned()"
+                      (click)="joinRaid('mt.dirge_or_bard')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.mt.dirge_or_bard === selected_raider.character.displayname"
+                      (click)="leaveRaid('mt.dirge_or_bard')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.mt.dirge_or_bard !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('mt.dirge_or_bard')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.mt.rules.coercer_or_enchanter}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.mt.coercer_or_enchanter !== ''">{{raid.setup.mt.coercer_or_enchanter}}</div>
+              <button class="btn btn-success btn-block"
+                      *ngIf="raid.setup.mt.coercer_or_enchanter === '' && selected_raider !== null && isRole(raid.setup.mt.rules.coercer_or_enchanter) && !isSigned()"
+                      (click)="joinRaid('mt.coercer_or_enchanter')">
+                Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.mt.coercer_or_enchanter === selected_raider.character.displayname"
+                      (click)="leaveRaid('mt.coercer_or_enchanter')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.mt.coercer_or_enchanter !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('mt.coercer_or_enchanter')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.mt.rules.templar_or_healer}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.mt.templar_or_healer !== ''">{{raid.setup.mt.templar_or_healer}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.mt.templar_or_healer === '' && selected_raider !== null && isRole(raid.setup.mt.rules.templar_or_healer) && !isSigned()"
+                      (click)="joinRaid('mt.templar_or_healer')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.mt.templar_or_healer === selected_raider.character.displayname"
+                      (click)="leaveRaid('mt.templar_or_healer')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.mt.templar_or_healer !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('mt.templar_or_healer')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.mt.rules.defiler_or_warder}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.mt.defiler_or_warder !== ''">{{raid.setup.mt.defiler_or_warder}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.mt.defiler_or_warder === '' && selected_raider !== null && isRole(raid.setup.mt.rules.defiler_or_warder) && !isSigned()"
+                      (click)="joinRaid('mt.defiler_or_warder')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.mt.defiler_or_warder === selected_raider.character.displayname"
+                      (click)="leaveRaid('mt.defiler_or_warder')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.mt.defiler_or_warder !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('mt.defiler_or_warder')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.mt.rules.swash_or_hatetransfer}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.mt.swash_or_hatetransfer !== ''">{{raid.setup.mt.swash_or_hatetransfer}}</div>
+              <button class="btn btn-success btn-block"
+                      *ngIf="raid.setup.mt.swash_or_hatetransfer == '' && selected_raider !== null && isRole(raid.setup.mt.rules.swash_or_hatetransfer) && !isSigned()"
+                      (click)="joinRaid('mt.swash_or_hatetransfer')">
+                Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.mt.swash_or_hatetransfer === selected_raider.character.displayname"
+                      (click)="leaveRaid('mt.swash_or_hatetransfer')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.mt.swash_or_hatetransfer !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('mt.swash_or_hatetransfer')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- end MT Group -->
+        <div class="col-md-3">
+          <h3 class="text-center">OT Group</h3>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.ot.rules.tank}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.ot.tank !== ''">{{raid.setup.ot.tank}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.ot.tank === '' && selected_raider !== null && isRole(raid.setup.ot.rules.tank) && !isSigned()"
+                      (click)="joinRaid('ot.tank')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.ot.tank === selected_raider.character.displayname" (click)="leaveRaid('ot.tank')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.ot.tank !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('ot.tank')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.ot.rules.dirge_or_bard}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.ot.dirge_or_bard !== ''">{{raid.setup.ot.dirge_or_bard}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.ot.dirge_or_bard === '' && selected_raider !== null && isRole(raid.setup.ot.rules.dirge_or_bard) && !isSigned()"
+                      (click)="joinRaid('ot.dirge_or_bard')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.ot.dirge_or_bard === selected_raider.character.displayname" (click)="leaveRaid('ot.dirge_or_bard')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.ot.dirge_or_bard !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('ot.dirge_or_bard')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.ot.rules.coercer_or_enchanter}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.ot.coercer_or_enchanter !== ''">{{raid.setup.ot.coercer_or_enchanter}}</div>
+              <button class="btn btn-success btn-block"
+                      *ngIf="raid.setup.ot.coercer_or_enchanter === '' && selected_raider !== null && isRole(raid.setup.ot.rules.coercer_or_enchanter) && !isSigned()"
+                      (click)="joinRaid('ot.coercer_or_enchanter')">
+                Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.ot.coercer_or_enchanter === selected_raider.character.displayname"
+                      (click)="leaveRaid('ot.coercer_or_enchanter')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.ot.coercer_or_enchanter !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('ot.coercer_or_enchanter')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.ot.rules.shaman_or_healer}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.ot.shaman_or_healer !== ''">{{raid.setup.ot.shaman_or_healer}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.ot.shaman_or_healer === '' && selected_raider !== null && isRole(raid.setup.ot.rules.shaman_or_healer) && !isSigned()"
+                      (click)="joinRaid('ot.shaman_or_healer')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.ot.shaman_or_healer === selected_raider.character.displayname"
+                      (click)="leaveRaid('ot.shaman_or_healer')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.ot.shaman_or_healer !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('ot.shaman_or_healer')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.ot.rules.cleric_or_healer}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.ot.cleric_or_healer !== ''">{{raid.setup.ot.cleric_or_healer}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.ot.cleric_or_healer === '' && selected_raider !== null && isRole(raid.setup.ot.rules.cleric_or_healer) && !isSigned()"
+                      (click)="joinRaid('ot.cleric_or_healer')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.ot.cleric_or_healer === selected_raider.character.displayname"
+                      (click)="leaveRaid('ot.cleric_or_healer')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.ot.cleric_or_healer !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('ot.cleric_or_healer')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.ot.rules.dps_or_hatetransfer}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.ot.dps_or_hatetransfer !== ''">{{raid.setup.ot.dps_or_hatetransfer}}</div>
+              <button class="btn btn-success btn-block"
+                      *ngIf="raid.setup.ot.dps_or_hatetransfer === '' && selected_raider !== null && isRole(raid.setup.ot.rules.dps_or_hatetransfer) && !isSigned()"
+                      (click)="joinRaid('ot.dps_or_hatetransfer')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.ot.dps_or_hatetransfer === selected_raider.character.displayname"
+                      (click)="leaveRaid('ot.dps_or_hatetransfer')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.ot.dps_or_hatetransfer !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('ot.dps_or_hatetransfer')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- end OT -->
+        <div class="col-md-3">
+          <h3 class="text-center">DPS1</h3>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.dps_1.rules.dps_or_tank}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.dps_1.dps_or_tank !== ''">{{raid.setup.dps_1.dps_or_tank}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.dps_1.dps_or_tank === '' && selected_raider !== null && isRole(raid.setup.dps_1.rules.dps_or_tank) && !isSigned()"
+                      (click)="joinRaid('dps_1.dps_or_tank')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.dps_1.dps_or_tank === selected_raider.character.displayname"
+                      (click)="leaveRaid('dps_1.dps_or_tank')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.dps_1.dps_or_tank !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('dps_1.dps_or_tank')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.dps_1.rules.dps}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.dps_1.dps !== ''">{{raid.setup.dps_1.dps}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.dps_1.dps === '' && selected_raider !== null && isRole(raid.setup.dps_1.rules.dps) && !isSigned()"
+                      (click)="joinRaid('dps_1.dps')">
+                Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.dps_1.dps === selected_raider.character.displayname"
+                      (click)="leaveRaid('dps_1.dps')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.dps_1.dps !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('dps_1.dps')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.dps_1.rules.bard}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.dps_1.bard !== ''">{{raid.setup.dps_1.bard}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.dps_1.bard === '' && selected_raider !== null && isRole(raid.setup.dps_1.rules.bard) && !isSigned()"
+                      (click)="joinRaid('dps_1.bard')">
+                Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.dps_1.bard === selected_raider.character.displayname"
+                      (click)="leaveRaid('dps_1.bard')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.dps_1.bard !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('dps_1.bard')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.dps_1.rules.enchanter}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.dps_1.enchanter !== ''">{{raid.setup.dps_1.enchanter}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.dps_1.enchanter === '' && selected_raider !== null && isRole(raid.setup.dps_1.rules.enchanter) && !isSigned()"
+                      (click)="joinRaid('dps_1.enchanter')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.dps_1.enchanter === selected_raider.character.displayname"
+                      (click)="leaveRaid('dps_1.enchanter')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.dps_1.enchanter !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('dps_1.enchanter')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.dps_1.rules.healer_or_dps}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.dps_1.healer_or_dps !== ''">{{raid.setup.dps_1.healer_or_dps}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.dps_1.healer_or_dps === '' && selected_raider !== null && isRole(raid.setup.dps_1.rules.healer_or_dps) && !isSigned()"
+                      (click)="joinRaid('dps_1.healer_or_dps')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.dps_1.healer_or_dps === selected_raider.character.displayname"
+                      (click)="leaveRaid('dps_1.healer_or_dps')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.dps_1.healer_or_dps !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('dps_1.healer_or_dps')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.dps_1.rules.healer}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.dps_1.healer !== ''">{{raid.setup.dps_1.healer}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.dps_1.healer === '' && selected_raider !== null && isRole(raid.setup.dps_1.rules.healer) && !isSigned()"
+                      (click)="joinRaid('dps_1.healer')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.dps_1.healer === selected_raider.character.displayname"
+                      (click)="leaveRaid('dps_1.healer')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.dps_1.healer !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('dps_1.healer')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+
+        <div class="col-md-3">
+          <h3 class="text-center">DPS2</h3>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.dps_2.rules.dps_or_tank}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.dps_2.dps_or_tank !== ''">{{raid.setup.dps_2.dps_or_tank}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.dps_2.dps_or_tank === '' && selected_raider !== null && isRole(raid.setup.dps_2.rules.dps_or_tank) && !isSigned()"
+                      (click)="joinRaid('dps_2.dps_or_tank')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.dps_2.dps_or_tank === selected_raider.character.displayname"
+                      (click)="leaveRaid('dps_2.dps_or_tank')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.dps_2.dps_or_tank !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('dps_2.dps_or_tank')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.dps_2.rules.dps}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.dps_2.dps !== ''">{{raid.setup.dps_2.dps}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.dps_2.dps === '' && selected_raider !== null && isRole(raid.setup.dps_2.rules.dps) && !isSigned()"
+                      (click)="joinRaid('dps_2.dps')">
+                Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.dps_2.dps === selected_raider.character.displayname"
+                      (click)="leaveRaid('dps_2.dps')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.dps_2.dps !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('dps_2.dps')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.dps_2.rules.bard}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.dps_2.bard !== ''">{{raid.setup.dps_2.bard}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.dps_2.bard === '' && selected_raider !== null && isRole(raid.setup.dps_2.rules.bard) && !isSigned()"
+                      (click)="joinRaid('dps_2.bard')">
+                Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.dps_2.bard === selected_raider.character.displayname"
+                      (click)="leaveRaid('dps_2.bard')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.dps_2.bard !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('dps_2.bard')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.dps_2.rules.enchanter}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.dps_2.enchanter !== ''">{{raid.setup.dps_2.enchanter}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.dps_2.enchanter === '' && selected_raider !== null && isRole(raid.setup.dps_2.rules.enchanter) && !isSigned()"
+                      (click)="joinRaid('dps_2.enchanter')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.dps_2.enchanter === selected_raider.character.displayname"
+                      (click)="leaveRaid('dps_2.enchanter')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.dps_2.enchanter !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('dps_2.enchanter')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.dps_2.rules.healer_or_dps}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.dps_2.healer_or_dps !== ''">{{raid.setup.dps_2.healer_or_dps}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.dps_2.healer_or_dps === '' && selected_raider !== null && isRole(raid.setup.dps_2.rules.healer_or_dps) && !isSigned()"
+                      (click)="joinRaid('dps_2.healer_or_dps')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.dps_2.healer_or_dps === selected_raider.character.displayname"
+                      (click)="leaveRaid('dps_2.healer_or_dps')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.dps_2.healer_or_dps !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('dps_2.healer_or_dps')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="text-uppercase text-center font-weight-bold">
+                  {{raid.setup.dps_2.rules.healer}}
+                </div>
+              </div>
+              <div class="card-text text-center" *ngIf="raid.setup.dps_2.healer !== ''">{{raid.setup.dps_2.healer}}</div>
+              <button class="btn btn-success btn-block" *ngIf="raid.setup.dps_2.healer === '' && selected_raider !== null && isRole(raid.setup.dps_2.rules.healer) && !isSigned()"
+                      (click)="joinRaid('dps_2.healer')">Join
+              </button>
+              <button class="btn btn-primary btn-block" *ngIf="selected_raider !== null && raid.setup.dps_2.healer === selected_raider.character.displayname"
+                      (click)="leaveRaid('dps_2.healer')">
+                Unsign {{selected_raider.character.name.first}}
+              </button>
+              <button *ngIf="user_id === raid.keycloak_id && raid.setup.dps_2.healer !== ''" class="btn btn-block btn-danger" (click)="leaveRaid('dps_2.healer')">
+                Kick From Raid
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<br>
+<br>
+<br>
+<br>
+

@@ -36,9 +36,66 @@
                     rows="15"></textarea>
         </div>
       </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="form-group">
+            <label for="world">World</label>
+            <select id="world" name="world" class="form-control" [(ngModel)]="model.world">
+              <option *ngFor="let world of worlds" [value]="world">{{world}}</option>
+            </select>
+          </div>
+        </div>
+      </div>
     </fieldset>
     <fieldset>
     <legend>Raid Setup</legend>
+      <div class="row">
+        <div class="col-12">
+          Valid values:
+          <span class="badge badge-pill">tank</span>,
+          <span class="badge badge-pill">healer</span>,
+          <span class="badge badge-pill">mage</span>,
+          <span class="badge badge-pill">scout</span>,
+          <span class="badge badge-pill">warrior</span>,
+          <span class="badge badge-pill">brawler</span>,
+          <span class="badge badge-pill">crusader</span>,
+          <span class="badge badge-pill">cleric</span>,
+          <span class="badge badge-pill">shaman</span>,
+          <span class="badge badge-pill">druid</span>,
+          <span class="badge badge-pill">summoner</span>,
+          <span class="badge badge-pill">enchanter</span>,
+          <span class="badge badge-pill">sorcerer</span>,
+          <span class="badge badge-pill">rogue</span>,
+          <span class="badge badge-pill">predator</span>,
+          <span class="badge badge-pill">bard</span>,
+          <span class="badge badge-pill">dps</span>,
+          <span class="badge badge-pill">hatetransfer</span>,
+          <span class="badge badge-pill">guardian</span>,
+          <span class="badge badge-pill">berserker</span>,
+          <span class="badge badge-pill">bruiser</span>,
+          <span class="badge badge-pill">monk</span>,
+          <span class="badge badge-pill">shadowknight</span>,
+          <span class="badge badge-pill">paladin</span>,
+          <span class="badge badge-pill">templar</span>,
+          <span class="badge badge-pill">inquisitor</span>,
+          <span class="badge badge-pill">defiler</span>,
+          <span class="badge badge-pill">mystic</span>,
+          <span class="badge badge-pill">fury</span>,
+          <span class="badge badge-pill">warden</span>,
+          <span class="badge badge-pill">necromancer</span>,
+          <span class="badge badge-pill">conjuror</span>,
+          <span class="badge badge-pill">wizard</span>,
+          <span class="badge badge-pill">warlock</span>,
+          <span class="badge badge-pill">illusionist</span>,
+          <span class="badge badge-pill">coercer</span>,
+          <span class="badge badge-pill">brigand</span>,
+          <span class="badge badge-pill">swashbuckler</span>,
+          <span class="badge badge-pill">assassin</span>,
+          <span class="badge badge-pill">ranger</span>,
+          <span class="badge badge-pill">dirge</span>,
+          <span class="badge badge-pill">troubador</span>.
+        </div>
+      </div>
       <div class="row">
         <div class="col-sm-3">
           <h6>MT Group</h6>
@@ -211,7 +268,7 @@
       </div>
     </fieldset>
     <div class="form-group">
-      <button class="btn btn-outline-primary btn-block" type="submit">Create This Raid Now</button>
+      <button class="btn btn-primary btn-block" type="submit">Create This Raid Now</button>
     </div>
   </form>
 </div>

@@ -1,17 +1,95 @@
 <div class="container">
-  <table class="table">
-    <thead>
-    <tr>
-      <th>Id</th>
-      <th>Name</th>
-      <th>Email</th>
-    </tr>
-    </thead>
-    <tbody>
-    <td>{{claims.sub}}</td>
-    <td>{{claims.name}}</td>
-    <td>{{claims.email}}</td>
-    </tbody>
-  </table>
+  <div class="row">
+    <div class="col-12">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Email</th>
+        </tr>
+        </thead>
+        <tbody>
+        <td>{{claims.sub}}</td>
+        <td>{{claims.name}}</td>
+        <td>{{claims.email}}</td>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <button class="btn btn-outline-primary btn-block" routerLink="add">Add Raider</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <h4>My Raiders</h4>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card-columns">
+        <div class="card text-white bg-secondary" *ngFor="let raider of raiders">
+          <div class="card-body">
+            <img class="card-img-top"
+                 [src]="'https://census.daybreakgames.com/s:contested/img/eq2/character/' + raider.character.id + '/headshot'"
+                 alt="headshot">
+            <div class="card-img-overlay">
+              <h6 class="card-title">
+                {{raider.character.displayname}}
+              </h6>
+            </div>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item list-group-item-secondary">
+              {{raider.character.type.gender}} {{raider.character.type.race}} {{raider.character.type.class}} <br>
+              Level {{raider.character.type.level}} / {{raider.character.type.aa_level}} AA <br>
+              {{raider.character.type.ts_level}} {{raider.character.type.ts_class}}
+            </li>
+            <li class="list-group-item list-group-item-secondary">
+              STR: {{raider.character.stats.str.effective|number}}<br>
+              AGI: {{raider.character.stats.agi.effective|number}}<br>
+              WIS: {{raider.character.stats.wis.effective|number}}<br>
+              INT: {{raider.character.stats.int.effective|number}}<br>
+              STA: {{raider.character.stats.sta.effective|number}}<br>
+            </li>
+            <li class="list-group-item list-group-item-secondary">
+              HP Max: {{raider.character.stats.health.max|number}}<br>
+              POWER Max: {{raider.character.stats.power.max|number}}<br>
+              <br>
+              HP Regen: {{raider.character.stats.health.regen|number}}<br>
+              POWER Regen: {{raider.character.stats.power.regen|number}}<br>
+            </li>
+            <li class="list-group-item list-group-item-secondary">
+              Primary Delay: {{raider.character.stats.weapon.primarydelay}}<br>
+              Primary MinDmg: {{raider.character.stats.weapon.primarymindamage|number}}<br>
+              Primary MaxDmg: {{raider.character.stats.weapon.primarymaxdamage|number}}<br>
+              <br>
+              Secondary Delay: {{raider.character.stats.weapon.secondarydelay}}<br>
+              Secondary MinDmg: {{raider.character.stats.weapon.secondarymindamage|number}}<br>
+              Secondary MaxDmg: {{raider.character.stats.weapon.secondarymaxdamage|number}}<br>
+              <br>
+              Ranged Delay: {{raider.character.stats.weapon.rangeddelay}}<br>
+              Ranged MinDmg: {{raider.character.stats.weapon.rangedmindamage|number}}<br>
+              Ranged MaxDmg: {{raider.character.stats.weapon.rangedmaxdamage|number}}<br>
+            </li>
+            <li class="list-group-item list-group-item-secondary">
+              Resistances:<br>
+              Physical {{raider.character.resists.physical.effective}} ({{raider.character.stats.combat.mitigation_physical}}%) <br>
+              Arcane {{raider.character.resists.arcane.effective}} ({{raider.character.stats.combat.mitigation_arcane}}%) <br>
+              Elemental {{raider.character.resists.elemental.effective}} ({{raider.character.stats.combat.mitigation_elemental}}%) <br>
+              Noxious {{raider.character.resists.noxious.effective}} ({{raider.character.stats.combat.mitigation_noxious}}%)
+            </li>
+            <li class="list-group-item list-group-item-secondary"></li>
+            <li class="list-group-item list-group-item-secondary"></li>
+            <li class="list-group-item list-group-item-secondary"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
+

@@ -17,6 +17,8 @@ import { NewraidComponent } from './components/newraid/newraid.component';
 import {FormsModule} from '@angular/forms';
 import { RaiddetailComponent } from './components/raiddetail/raiddetail.component';
 import { RaideditComponent } from './components/raidedit/raidedit.component';
+import { AddraiderComponent } from './components/addraider/addraider.component';
+import { PrivacypolicyComponent } from './components/privacypolicy/privacypolicy.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { RaideditComponent } from './components/raidedit/raidedit.component';
     RaidlistComponent,
     NewraidComponent,
     RaiddetailComponent,
-    RaideditComponent
+    RaideditComponent,
+    AddraiderComponent,
+    PrivacypolicyComponent,
   ],
   imports: [
     BrowserModule,

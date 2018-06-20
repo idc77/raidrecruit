@@ -8,8 +8,10 @@ import {Router} from '@angular/router';
   styleUrls: ['./newraid.component.scss']
 })
 export class NewraidComponent implements OnInit {
+  worlds = ['Antonia Bayle', 'Fallen Gate', 'Halls of Fate', 'Isle of Refuge', 'Maj\'Dul', 'Skyfire', 'Stormhold', 'Thurgadin'];
   date: { year: number, month: number };
   model: any = {
+    world: 'Fallen Gate',
     title: '',
     date: {},
     time_start: {hour: 19, minute: 0},
@@ -80,7 +82,7 @@ export class NewraidComponent implements OnInit {
         rules: {
           bard: 'troubador',
           enchanter: 'illusionist',
-          healer_or_dps: 'healer,dps',
+          healer_or_dps: 'dps,healer',
           healer: 'healer',
           dps: 'mage',
           dps_or_tank: 'dps,tank'
@@ -96,7 +98,7 @@ export class NewraidComponent implements OnInit {
         rules: {
           bard: 'bard',
           enchanter: 'enchanter',
-          healer_or_dps: 'healer,dps',
+          healer_or_dps: 'dps,healer',
           healer: 'healer',
           dps: 'dps',
           dps_or_tank: 'dps,tank'
@@ -113,12 +115,18 @@ export class NewraidComponent implements OnInit {
   }
 
   ngOnInit() {
+    const now = new Date();
+    this.model.date = {
+      year: now.getFullYear(),
+      month: now.getMonth() + 1,
+      day: now.getDate() + 1
+    };
   }
 
   modelToHTTPModel(m: any) {
     const n = new Raid();
-    n.date_start = new Date(m.date.year, m.date.month, m.date.day, m.time_start.hour, m.time_start.minute);
-    n.date_end = new Date(m.date.year, m.date.month, m.date.day, m.time_end.hour, m.time_end.minute);
+    n.date_start = new Date(m.date.year, m.date.month - 1, m.date.day, m.time_start.hour, m.time_start.minute);
+    n.date_end = new Date(m.date.year, m.date.month - 1, m.date.day, m.time_end.hour, m.time_end.minute);
     n.description = m.description;
     n.setup = m.setup;
     n.title = m.title;

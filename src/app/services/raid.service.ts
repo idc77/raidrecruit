@@ -25,7 +25,7 @@ export class RaidService {
   }
 
   update(id: string, m: Raid) {
-    return this.http.put(environment.apiroot + '/raids/' + id, m);
+    return this.http.put<Raid>(environment.apiroot + '/raids/' + id, m);
   }
 
   remove(id: string) {
@@ -37,6 +37,7 @@ export class Raid {
   id: string;
   title: string;
   keycloak_id?: string;
+  world?: string;
   date_meet?: Date;
   date_start: Date;
   date_end: Date;
@@ -52,7 +53,7 @@ export class RaidSetup {
   sitsize: 4;
 }
 
-export class MTGroup {
+export interface MTGroup {
   tank: string;
   templar_or_healer: string;
   defiler_or_warder: string;
@@ -70,7 +71,7 @@ export class MTGroup {
 
 }
 
-export class OTGroup {
+export interface OTGroup {
   tank: string;
   cleric_or_healer: string;
   shaman_or_healer: string;
@@ -87,7 +88,7 @@ export class OTGroup {
   };
 }
 
-export class DPSGroup {
+export interface DPSGroup {
   bard: string;
   enchanter: string;
   healer_or_dps: string;
@@ -102,12 +103,4 @@ export class DPSGroup {
     dps: string;
     dps_or_tank: string;
   };
-}
-
-export class RaidNote {
-  id: string;
-  keycloak_id: string;
-  raid_id: string;
-  date: Date;
-  note: string;
 }

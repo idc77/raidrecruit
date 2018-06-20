@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <h3>List of Raids</h3>
+    </div>
+  </div>
+    <div class="row">
+    <div class="col-sm-12">
+      <div *ngIf="isLoggedin()" class="text-right mb-3">
+        <button class="btn btn-outline-primary" routerLink="/new">+ Plan New Raid</button>
+      </div>
+      <div class="card" *ngFor="let raid of raids | async">
+        <div class="card-body">
+          <div class="card-title">{{raid.title}}</div>
+          <p><strong class="badge badge-secondary">{{raid.date_meet|date:'full'}}</strong> &mdash; <strong class="badge badge-secondary">{{raid.date_end|date:'mediumTime'}}</strong></p>
+          <button class="btn btn-block btn-outline-primary" [routerLink]="raid.id">View details of {{raid.title}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

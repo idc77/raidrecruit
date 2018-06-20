@@ -1,0 +1,87 @@
+<div class="container">
+
+  <div class="row">
+    <div class="col-12">
+      <form (ngSubmit)="search()">
+        <fieldset>
+          <legend>Search by Name and World</legend>
+          <div class="form-row">
+            <div class="form-group col-sm-12 col-md-6">
+              <label for="name">Name</label>
+              <input id="name" type="text" name="name" class="form-control" [(ngModel)]="search_query.name">
+            </div>
+            <div class="form-group col-sm-12 col-md-6">
+              <label for="world">World</label>
+              <select id="world" name="world" class="form-control" [(ngModel)]="search_query.world">
+                <option *ngFor="let world of worlds" [value]="world">{{world}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="search_type">Search Type</label>
+            <select id="search_type" name="search_type" class="form-control" [(ngModel)]="search_query.search_type">
+              <option value="exact">Exact</option>
+              <option value="prefix">Prefix</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-block btn-outline-primary">Search by Name and World</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-12">
+      <form (ngSubmit)="search()">
+        <fieldset>
+          <legend>Search by EQ2Wire/Armory URL</legend>
+          <div class="form-group">
+            <label for="url">URL</label>
+            <input id="url" type="text" class="form-control" name="url" [(ngModel)]="search_query.url"
+                   placeholder="Paste the eq2wire address here">
+          </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-block btn-outline-primary">Search by EQ2Wire/Armory URL</button>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+  <hr>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-sm-3" *ngFor="let character of characters.character_list">
+          <div class="card text-white bg-dark mb-3" (click)="selectCharacter(character)"
+               [class.bg-dark]="selectedCharacter != character" [class.bg-primary]="selectedCharacter == character"
+               [class.border-warning]="selectedCharacter == character" [class.border]="selectedCharacter == character">
+            <div class="card-body">
+              <img class="card-img-top"
+                   [src]="'https://census.daybreakgames.com/s:contested/img/eq2/character/' + character.id + '/headshot'"
+                   alt="headshot">
+              <div class="card-img-overlay">
+                <h6 class="card-title">
+                  {{character.displayname}}
+                </h6>
+              </div>
+              <div class="card-text">
+                <div>Level {{character.type.level}} / {{character.type.aa_level}} AA</div>
+                <div>{{character.type.gender}} {{character.type.race}} {{character.type.class}}</div>
+                <div>{{character.type.ts_level}} {{character.type.ts_class}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-block btn-primary" *ngIf="selectedCharacter != null" (click)="addCharacter()">Add
+        the selected character
+      </button>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+</div>
