@@ -7,6 +7,7 @@ import {switchMap} from 'rxjs/operators';
 import {Claims} from '../../claims';
 import {Raider, RaiderService} from '../../services/raider.service';
 import {RaidClass, RaidClassService} from '../../services/raidclass.service';
+import {RaidNote, RaidNoteService} from '../../services/raidnote.service';
 
 @Component({
   selector: 'icod-raiddetail',
@@ -16,6 +17,7 @@ import {RaidClass, RaidClassService} from '../../services/raidclass.service';
 export class RaiddetailComponent implements OnInit {
 
   raid: Raid = null;
+  notes: RaidNote[] = null;
   raiders: Raider[] = null;
   selected_raider: Raider = null;
   user_id: string;
@@ -28,6 +30,7 @@ export class RaiddetailComponent implements OnInit {
     private raidService: RaidService,
     private raiderService: RaiderService,
     private raidClassService: RaidClassService,
+    private raidNoteService: RaidNoteService,
   ) {
     this.raid = new Raid();
     this.raid.setup = new RaidSetup();
@@ -71,11 +74,12 @@ export class RaiddetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user_id = this.getUserId();
     this.route.paramMap.subscribe(value => {
       const id = value.get('id');
-      this.raidService.find(id).subscribe(data => this.raid = data);
+      this.raidService.find(id).subscribe(data => this.raid = data );
+      this.raidNoteService.list(id).subscribe(data => this.notes = data );
     });
-    this.user_id = this.getUserId();
     this.raiderService.list(this.user_id).subscribe(
       data => {
         this.raiders = data;
