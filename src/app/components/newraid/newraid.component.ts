@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {RaidSetup, Raid, RaidService} from '../../services/raid.service';
+import {Raid, RaidGroup, RaidService} from '../../services/raid.service';
 import {Router} from '@angular/router';
 
 @Component({
@@ -12,7 +12,7 @@ export class NewraidComponent implements OnInit {
   date: { year: number, month: number };
   model: any = {
     world: 'Fallen Gate',
-    title: '',
+    title: 'Pick Up Raid ' + new Date().toString(),
     date: {},
     time_start: {hour: 19, minute: 0},
     time_end: {hour: 22, minute: 0},
@@ -40,68 +40,68 @@ export class NewraidComponent implements OnInit {
     + 'minimum bids for any item is 1p with minimum increments of 1p' + '\n'
     + 'at the end of the raid all platinum from those bids are split among the remaining members of the raid via the /split command',
     setup: {
-      mt: {
-        tank: '',
-        templar_or_healer: '',
-        defiler_or_warder: '',
-        coercer_or_enchanter: '',
-        dirge_or_bard: '',
-        swash_or_hatetransfer: '',
+      mt: <RaidGroup>{
+        slot_1: '',
+        slot_2: '',
+        slot_3: '',
+        slot_4: '',
+        slot_5: '',
+        slot_6: '',
         rules: {
-          tank: 'tank',
-          templar_or_healer: 'templar',
-          defiler_or_warder: 'defiler',
-          coercer_or_enchanter: 'coercer',
-          dirge_or_bard: 'dirge',
-          swash_or_hatetransfer: 'hatetransfer'
+          slot_1: 'tank',
+          slot_2: 'templar',
+          slot_3: 'defiler',
+          slot_4: 'coercer',
+          slot_5: 'dirge',
+          slot_6: 'hatetransfer'
         }
       },
-      ot: {
-        tank: '',
-        cleric_or_healer: '',
-        shaman_or_healer: '',
-        coercer_or_enchanter: '',
-        dirge_or_bard: '',
-        dps_or_hatetransfer: '',
+      ot: <RaidGroup>{
+        slot_1: '',
+        slot_2: '',
+        slot_3: '',
+        slot_4: '',
+        slot_5: '',
+        slot_6: '',
         rules: {
-          tank: 'tank',
-          cleric_or_healer: 'healer',
-          shaman_or_healer: 'shaman',
-          coercer_or_enchanter: 'coercer',
-          dirge_or_bard: 'dirge',
-          dps_or_hatetransfer: 'dps'
+          slot_1: 'tank',
+          slot_2: 'healer',
+          slot_3: 'shaman',
+          slot_4: 'coercer',
+          slot_5: 'dirge',
+          slot_6: 'dps'
         }
       },
-      dps_1: {
-        bard: '',
-        enchanter: '',
-        healer_or_dps: '',
-        healer: '',
-        dps: '',
-        dps_or_tank: '',
+      dps_1: <RaidGroup>{
+        slot_1: '',
+        slot_2: '',
+        slot_3: '',
+        slot_4: '',
+        slot_5: '',
+        slot_6: '',
         rules: {
-          bard: 'troubador',
-          enchanter: 'illusionist',
-          healer_or_dps: 'dps,healer',
-          healer: 'healer',
-          dps: 'mage',
-          dps_or_tank: 'dps,tank'
+          slot_1: 'troubador',
+          slot_2: 'illusionist',
+          slot_3: 'dps,healer',
+          slot_4: 'healer',
+          slot_5: 'mage',
+          slot_6: 'dps,tank'
         }
       },
-      dps_2: {
-        bard: '',
-        enchanter: '',
-        healer_or_dps: '',
-        healer: '',
-        dps: '',
-        dps_or_tank: '',
+      dps_2: <RaidGroup>{
+        slot_1: '',
+        slot_2: '',
+        slot_3: '',
+        slot_4: '',
+        slot_5: '',
+        slot_6: '',
         rules: {
-          bard: 'bard',
-          enchanter: 'enchanter',
-          healer_or_dps: 'dps,healer',
-          healer: 'healer',
-          dps: 'dps',
-          dps_or_tank: 'dps,tank'
+          slot_1: 'bard',
+          slot_2: 'enchanter',
+          slot_3: 'dps,healer',
+          slot_4: 'healer',
+          slot_5: 'dps',
+          slot_6: 'dps,tank'
         }
       },
       sitsize: 4

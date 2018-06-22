@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Profile} from './profile.service';
 import {environment} from '../../environments/environment';
 
 @Injectable({
@@ -46,61 +45,33 @@ export class Raid {
 }
 
 export class RaidSetup {
-  mt: MTGroup;
-  ot: OTGroup;
-  dps_1: DPSGroup;
-  dps_2: DPSGroup;
+  mt: RaidGroup;
+  ot: RaidGroup;
+  dps_1: RaidGroup;
+  dps_2: RaidGroup;
+  sitting?: RaidSlot[];
   sitsize: 4;
 }
 
-export interface MTGroup {
-  tank: string;
-  templar_or_healer: string;
-  defiler_or_warder: string;
-  coercer_or_enchanter: string;
-  dirge_or_bard: string;
-  swash_or_hatetransfer: string;
-  rules: {
-    tank: string;
-    templar_or_healer: string;
-    defiler_or_warder: string;
-    coercer_or_enchanter: string;
-    dirge_or_bard: string;
-    swash_or_hatetransfer: string;
-  };
-
+export interface RaidGroup {
+  slot_1: string;
+  slot_2: string;
+  slot_3: string;
+  slot_4: string;
+  slot_5: string;
+  slot_6: string;
+  rules: RaidGroupRules;
 }
 
-export interface OTGroup {
-  tank: string;
-  cleric_or_healer: string;
-  shaman_or_healer: string;
-  coercer_or_enchanter: string;
-  dirge_or_bard: string;
-  dps_or_hatetransfer: string;
-  rules: {
-    tank: string;
-    cleric_or_healer: string;
-    shaman_or_healer: string;
-    coercer_or_enchanter: string;
-    dirge_or_bard: string;
-    dps_or_hatetransfer: string;
-  };
+export interface RaidGroupRules {
+  slot_1: string;
+  slot_2: string;
+  slot_3: string;
+  slot_4: string;
+  slot_5: string;
+  slot_6: string;
 }
 
-export interface DPSGroup {
-  bard: string;
-  enchanter: string;
-  healer_or_dps: string;
-  healer: string;
-  dps: string;
-  dps_or_tank: string;
-  rules: {
-    bard: string;
-    enchanter: string;
-    healer_or_dps: string;
-    healer: string;
-    dps: string;
-    dps_or_tank: string;
-  };
+export interface RaidSlot {
+  name: string;
 }
