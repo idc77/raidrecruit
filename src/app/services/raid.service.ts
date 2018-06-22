@@ -35,8 +35,8 @@ export class RaidService {
 export class Raid {
   id: string;
   title: string;
-  keycloak_id?: string;
-  world?: string;
+  keycloak_id: string;
+  world: string;
   date_meet?: Date;
   date_start: Date;
   date_end: Date;

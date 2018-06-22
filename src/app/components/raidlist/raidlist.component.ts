@@ -11,8 +11,12 @@ import {Claims} from '../../claims';
 })
 export class RaidlistComponent implements OnInit {
 
+  private _user_id: string = null;
+
   raids: Raid[];
-  userId: string;
+  userId: string = null;
+  worlds = ['', 'Antonia Bayle', 'Fallen Gate', 'Halls of Fate', 'Isle of Refuge', 'Maj\'Dul', 'Skyfire', 'Stormhold', 'Thurgadin'];
+  selected_world: string = null;
 
   constructor(
     private oauthService: OAuthService,
@@ -35,5 +39,13 @@ export class RaidlistComponent implements OnInit {
     let claims: Claims;
     claims = <Claims>this.oauthService.getIdentityClaims();
     return claims.sub;
+  }
+
+  set user_id(value: string) {
+    this._user_id = value;
+  }
+
+  get user_id() {
+    return this._user_id;
   }
 }

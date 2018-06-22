@@ -130,6 +130,7 @@ export class NewraidComponent implements OnInit {
     n.description = m.description;
     n.setup = m.setup;
     n.title = m.title;
+    n.world = m.world;
     return n;
   }
 
