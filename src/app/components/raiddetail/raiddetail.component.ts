@@ -17,10 +17,9 @@ import {RaidNote, RaidNoteService} from '../../services/raidnote.service';
 export class RaiddetailComponent implements OnInit {
 
   raid: Raid = null;
-  notes: RaidNote[] = null;
   raiders: Raider[] = null;
   selected_raider: Raider = null;
-  user_id: string;
+  _user_id: string;
   classes: RaidClass[] = null;
 
   constructor(
@@ -30,7 +29,6 @@ export class RaiddetailComponent implements OnInit {
     private raidService: RaidService,
     private raiderService: RaiderService,
     private raidClassService: RaidClassService,
-    private raidNoteService: RaidNoteService,
   ) {
     this.raid = new Raid();
     this.raid.setup = new RaidSetup();
@@ -74,26 +72,42 @@ export class RaiddetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user_id = this.getUserId();
+
     this.route.paramMap.subscribe(value => {
       const id = value.get('id');
-      this.raidService.find(id).subscribe(data => this.raid = data );
-      this.raidNoteService.list(id).subscribe(data => this.notes = data );
+      this.raidService.find(id).subscribe(data => this.raid = data);
     });
-    this.raiderService.list(this.user_id).subscribe(
-      data => {
-        this.raiders = data;
-        if (data.length === 1) {
-          this.selected_raider = data[0];
+    this.user_id = this.getUserId();
+  }
+
+  set user_id(value: string) {
+    if (value !== null) {
+      this._user_id = value;
+      this.raiderService.list(this.user_id).subscribe(
+        data => {
+          this.raiders = data;
+          if (data.length === 1) {
+            this.selected_raider = data[0];
+          } else {
+            this.selected_raider = this.findSignedRaider();
+          }
         }
-      }
-    );
+      );
+    }
+  }
+
+  get user_id(): string {
+    return this._user_id;
   }
 
   private getUserId() {
     let claims: Claims;
     claims = <Claims>this.oauthService.getIdentityClaims();
-    return claims.sub;
+    if ((claims != null) && (claims !== undefined)) {
+      return claims.sub;
+    } else {
+      return null;
+    }
   }
 
   selectRaider(r: Raider) {
@@ -325,6 +339,38 @@ export class RaiddetailComponent implements OnInit {
       }
     }
     return false;
+  }
+
+  findSignedRaider(): Raider {
+    for (const slot of Object.values(this.raid.setup.mt)) {
+      for (const raider of this.raiders) {
+        if (slot === raider.character.displayname) {
+          return raider;
+        }
+      }
+    }
+    for (const slot of Object.values(this.raid.setup.ot)) {
+      for (const raider of this.raiders) {
+        if (slot === raider.character.displayname) {
+          return raider;
+        }
+      }
+    }
+    for (const slot of Object.values(this.raid.setup.dps_1)) {
+      for (const raider of this.raiders) {
+        if (slot === raider.character.displayname) {
+          return raider;
+        }
+      }
+    }
+    for (const slot of Object.values(this.raid.setup.dps_2)) {
+      for (const raider of this.raiders) {
+        if (slot === raider.character.displayname) {
+          return raider;
+        }
+      }
+    }
+    return null;
   }
 
   removeRaid() {

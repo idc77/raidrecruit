@@ -19,6 +19,7 @@ import { RaiddetailComponent } from './components/raiddetail/raiddetail.componen
 import { RaideditComponent } from './components/raidedit/raidedit.component';
 import { AddraiderComponent } from './components/addraider/addraider.component';
 import { PrivacypolicyComponent } from './components/privacypolicy/privacypolicy.component';
+import { RaidnotesComponent } from './components/raidnotes/raidnotes.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { PrivacypolicyComponent } from './components/privacypolicy/privacypolicy
     RaideditComponent,
     AddraiderComponent,
     PrivacypolicyComponent,
+    RaidnotesComponent,
   ],
   imports: [
     BrowserModule,

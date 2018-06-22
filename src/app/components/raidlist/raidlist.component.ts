@@ -11,17 +11,17 @@ import {Claims} from '../../claims';
 })
 export class RaidlistComponent implements OnInit {
 
-  raids: Observable<Raid[]>;
+  raids: Raid[];
   userId: string;
 
   constructor(
     private oauthService: OAuthService,
     private raidService: RaidService
   ) {
-    this.raids = this.raidService.list();
   }
 
   ngOnInit() {
+    this.raidService.list().subscribe(value => this.raids = value);
     this.userId = this.getUserId();
   }
 

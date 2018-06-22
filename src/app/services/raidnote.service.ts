@@ -13,30 +13,30 @@ export class RaidNoteService {
   list(id: string) {
     let params = new HttpParams();
     params = params.append('raid_id', id);
-    return this.http.get<RaidNote[]>(environment.apiroot + '/raids/', {params: params});
+    return this.http.get<RaidNote[]>(environment.apiroot + '/raidnotes/', {params: params});
   }
 
   find(id: string) {
-    return this.http.get<RaidNote>(environment.apiroot + '/raids/' + id);
+    return this.http.get<RaidNote>(environment.apiroot + '/raidnotes/' + id);
   }
 
   create(m: RaidNote) {
-    return this.http.post<RaidNote>(environment.apiroot + '/raids/', m);
+    return this.http.post<RaidNote>(environment.apiroot + '/raidnotes/', m);
   }
 
   update(id: string, m: RaidNote) {
-    return this.http.put<RaidNote>(environment.apiroot + '/raids/' + id, m);
+    return this.http.put<RaidNote>(environment.apiroot + '/raidnotes/' + id, m);
   }
 
   remove(id: string) {
-    return this.http.delete(environment.apiroot + '/raids/' + id);
+    return this.http.delete(environment.apiroot + '/raidnotes/' + id);
   }
 }
-
 
 export class RaidNote {
   id: string;
   keycloak_id: string;
+  username: string;
   raid_id: string;
   date: Date;
   note: string;
