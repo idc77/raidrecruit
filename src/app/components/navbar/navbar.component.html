@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
   <div class="container">
-    <a class="navbar-brand" routerLink="">contested.de</a>
+    <a class="navbar-brand" routerLink=""><img src="/assets/favicon-256.png" width="30" height="30"></a>
     <button class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed" [attr.aria-expanded]="!isCollapsed" aria-controls="navbarCollapse">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -8,9 +8,6 @@
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
           <a class="nav-link" routerLink="">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item" routerLinkActive="active">
-          <a class="nav-link" routerLink="about">About</a>
         </li>
         <li class="nav-item" routerLinkActive="active">
           <a class="nav-link" routerLink="raids">Raids</a>
@@ -21,7 +18,7 @@
           <a class="nav-link" routerLink="raiders">Raiders</a>
         </li>
         <li class="nav-item" *ngIf="isLoggedin()">
-          <button class="btn btn-outline-primary nav-link" (click)="logoff()">Logout</button>
+          <button class="btn btn-light nav-link" (click)="logoff()">Logout</button>
         </li>
         <li class="nav-item" *ngIf="!isLoggedin()">
           <button class="btn btn-outline-primary nav-link" (click)="login()">Login or Register</button>

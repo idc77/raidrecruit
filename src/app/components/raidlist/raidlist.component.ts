@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Raid, RaidService} from '../../services/raid.service';
 import {Observable} from 'rxjs';
 import {OAuthService} from 'angular-oauth2-oidc';
@@ -16,7 +16,8 @@ export class RaidlistComponent implements OnInit {
   raids: Raid[];
   userId: string = null;
   worlds = ['', 'Antonia Bayle', 'Fallen Gate', 'Halls of Fate', 'Isle of Refuge', 'Maj\'Dul', 'Skyfire', 'Stormhold', 'Thurgadin'];
-  selected_world: string = null;
+  @Input() selected_world: string = null;
+
 
   constructor(
     private oauthService: OAuthService,

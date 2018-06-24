@@ -20,6 +20,8 @@ import {AddraiderComponent} from './components/addraider/addraider.component';
 import {PrivacypolicyComponent} from './components/privacypolicy/privacypolicy.component';
 import {RaidnotesComponent} from './components/raidnotes/raidnotes.component';
 import {RaidWorldFilterPipe} from './pipes/raid-world-filter.pipe';
+import { FooterComponent } from './components/footer/footer.component';
+import { TermsofserviceComponent } from './components/termsofservice/termsofservice.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import {RaidWorldFilterPipe} from './pipes/raid-world-filter.pipe';
     PrivacypolicyComponent,
     RaidnotesComponent,
     RaidWorldFilterPipe,
+    FooterComponent,
+    TermsofserviceComponent,
   ],
   imports: [
     BrowserModule,

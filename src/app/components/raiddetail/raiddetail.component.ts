@@ -57,14 +57,7 @@ export class RaiddetailComponent implements OnInit {
       slot_5: '',
       slot_6: '',
     };
-    this.raid.setup.dps_2.rules = <RaidGroupRules>{
-      slot_1: '',
-      slot_2: '',
-      slot_3: '',
-      slot_4: '',
-      slot_5: '',
-      slot_6: '',
-    };
+    this.raid.setup.dps_2.rules = <RaidGroupRules>{};
     this.raidClassService.list().subscribe(data => this.classes = data);
   }
 

@@ -8,9 +8,12 @@ import {RaidlistComponent} from './components/raidlist/raidlist.component';
 import {RaiddetailComponent} from './components/raiddetail/raiddetail.component';
 import {RaideditComponent} from './components/raidedit/raidedit.component';
 import {AddraiderComponent} from './components/addraider/addraider.component';
+import {HomeComponent} from './components/home/home.component';
+import {PrivacypolicyComponent} from './components/privacypolicy/privacypolicy.component';
+import {TermsofserviceComponent} from './components/termsofservice/termsofservice.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'raids', pathMatch: 'full'},
+  {path: '', component: HomeComponent},
   {path: 'about', component: AboutComponent},
   {path: 'raiders', component: WhoamiComponent, canActivate: [AuthGuard]},
   {path: 'raiders/add', component: AddraiderComponent, canActivate: [AuthGuard]},
@@ -18,6 +21,8 @@ const routes: Routes = [
   {path: 'raids/:id', component: RaiddetailComponent},
   {path: 'raids/:id/edit', component: RaideditComponent},
   {path: 'new', component: NewraidComponent, canActivate: [AuthGuard]},
+  {path: 'privacy-policy', component: PrivacypolicyComponent},
+  {path: 'terms-of-service', component: TermsofserviceComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 

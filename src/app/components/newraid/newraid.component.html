@@ -27,7 +27,7 @@
         </div>
         <div class="col-sm-6">
           <label for="title">Give the raid a meaningful title (e.g. Snoopy's MMIS, Pawbuster, Kor'Sha Raid)</label>
-          <input type="text" [(ngModel)]="model.title" name="title" id="title" class="form-control">
+          <input type="text" [(ngModel)]="model.title" name="title" id="title" class="form-control" required>
           <br>
           <label for="description">
             Describe the raid.. targets, goals, anything useful, bring potions etc. be at least this high
@@ -51,6 +51,7 @@
     <legend>Raid Setup</legend>
       <div class="row">
         <div class="col-12">
+          <div>
           Valid values:
           <span class="badge badge-pill">tank</span>,
           <span class="badge badge-pill">healer</span>,
@@ -94,6 +95,8 @@
           <span class="badge badge-pill">ranger</span>,
           <span class="badge badge-pill">dirge</span>,
           <span class="badge badge-pill">troubador</span>.
+          </div>
+          <div>You can also have multiple criteria for one raid slot. For instance, <span class="badge badge-pill">predator,summoner</span> or <span class="badge badge-pill">tank,mage,scout,healer</span>..</div>
         </div>
       </div>
       <div class="row">
@@ -267,6 +270,13 @@
         <input name="sitsize" type="number" class="form-control" id="sitting" [(ngModel)]="model.setup.sitsize">
       </div>
     </fieldset>
+    <div class="row" *ngIf="alerts">
+      <div class="col-12">
+        <div *ngFor="let alert of alerts">
+          <ngb-alert [type]="alert.type" [dismissible]="false">{{alert.message}}</ngb-alert>
+        </div>
+      </div>
+    </div>
     <div class="form-group">
       <button class="btn btn-primary btn-block" type="submit">Create This Raid Now</button>
     </div>

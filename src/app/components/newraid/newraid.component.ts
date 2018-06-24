@@ -8,37 +8,16 @@ import {Router} from '@angular/router';
   styleUrls: ['./newraid.component.scss']
 })
 export class NewraidComponent implements OnInit {
+  alerts: Alert[] = [];
   worlds = ['Antonia Bayle', 'Fallen Gate', 'Halls of Fate', 'Isle of Refuge', 'Maj\'Dul', 'Skyfire', 'Stormhold', 'Thurgadin'];
-  date: { year: number, month: number };
+  date: {year: number, month: number};
   model: any = {
     world: 'Fallen Gate',
-    title: 'Pick Up Raid ' + new Date().toString(),
-    date: {},
+    title: 'Pick Up Raid ' + Math.ceil(Math.random() * (1000000000)),
+    date: <ModelDate>{},
     time_start: {hour: 19, minute: 0},
     time_end: {hour: 22, minute: 0},
-    description: 'goals: <your goals here>' + '\n'
-    + '- have at least 50 cure potions of every kind' + '\n'
-    + '- scouts who use poison should have at least 100 of any kind of poison with them, damage, deaggro and debuff, also manaleech.' + '\n'
-    + '- your equipment should be in 100% condition, fully repaired' + '\n'
-    + '- your equipment should have at least last tier legendary adorns and they should be appropriate for your class.'
-    + '(e.g. no hate-gain for dps, or casting skills for scouts)' + '\n\n'
-    + 'loot rules:' + '\n'
-    + '1 item per archetype until every member of that archetype looted "eligible loot"' + '\n'
-    + 'eligible loot is any armor, weapon or jewelry piece' + '\n'
-    + 'masters or gems do not count toward this "eligible loot" counter, they are considered "sundries"' + '\n'
-    + 'sundries are on their own counter. In the case of masters you can only roll for the class you have designated you would like to loot for' + '\n'
-    + 'by default that is the class you have joined the raid with. If you would like to roll for a different class you have to let the raid lead know' + '\n'
-    + 'and the raid lead needs to confirm that choice.' + '\n\n'
-    + 'alternate rules: delete either if not applicable' + '\n\n'
-    + 'platinum bid rules' + '\n'
-    + 'All loot that drops is being bid for with platinum.' + '\n'
-    + 'The master looter collects any and all plat gained by the raid.' + '\n'
-    + 'When a chest drops the master looter loots all items in the chest' + '\n'
-    + 'and bidding starts by linking an item in the raid channel' + '\n'
-    + 'if there are no bids the item will be transmuted and mana sold at the end of the raid.' + '\n'
-    + 'Only those eligible to wear or use a certain item may bid on a certain item.' + '\n'
-    + 'minimum bids for any item is 1p with minimum increments of 1p' + '\n'
-    + 'at the end of the raid all platinum from those bids are split among the remaining members of the raid via the /split command',
+    description: '',
     setup: {
       mt: <RaidGroup>{
         slot_1: '',
@@ -104,23 +83,47 @@ export class NewraidComponent implements OnInit {
           slot_6: 'dps,tank'
         }
       },
-      sitsize: 4
+      sitsize: 0
     },
   };
 
   constructor(
     private raidService: RaidService,
     private router: Router,
-    ) {
+  ) {
   }
 
   ngOnInit() {
-    const now = new Date();
-    this.model.date = {
-      year: now.getFullYear(),
-      month: now.getMonth() + 1,
-      day: now.getDate() + 1
-    };
+    this.model.description = 'REPLACE THIS WITH YOUR RULES' + '\n'
+      + 'REPLACE THIS WITH YOUR RULES' + '\n'
+      + 'REPLACE THIS WITH YOUR RULES' + '\n'
+      + 'REPLACE THIS WITH YOUR RULES' + '\n'
+      + 'REPLACE THIS WITH YOUR RULES' + '\n'
+      + 'REPLACE THIS WITH YOUR RULES' + '\n'
+      + 'REPLACE THIS WITH YOUR RULES' + '\n'
+      + 'goals: <your goals here>' + '\n'
+      + '- have at least 50 cure potions of every kind' + '\n'
+      + '- scouts who use poison should have at least 100 of any kind of poison with them, damage, deaggro and debuff, also manaleech.' + '\n'
+      + '- your equipment should be in 100% condition, fully repaired' + '\n'
+      + '- your equipment should have at least last tier legendary adorns and they should be appropriate for your class.'
+      + '(e.g. no hate-gain for dps, or casting skills for scouts)' + '\n\n'
+      + 'loot rules:' + '\n'
+      + '1 item per archetype until every member of that archetype looted "eligible loot"' + '\n'
+      + 'eligible loot is any armor, weapon or jewelry piece' + '\n'
+      + 'masters or gems do not count toward this "eligible loot" counter, they are considered "sundries"' + '\n'
+      + 'sundries are on their own counter. In the case of masters you can only roll for the class you have designated you would like to loot for' + '\n'
+      + 'by default that is the class you have joined the raid with. If you would like to roll for a different class you have to let the raid lead know' + '\n'
+      + 'and the raid lead needs to confirm that choice.' + '\n\n'
+      + 'alternate rules: delete either if not applicable' + '\n\n'
+      + 'platinum bid rules' + '\n'
+      + 'All loot that drops is being bid for with platinum.' + '\n'
+      + 'The master looter collects any and all plat gained by the raid.' + '\n'
+      + 'When a chest drops the master looter loots all items in the chest' + '\n'
+      + 'and bidding starts by linking an item in the raid channel' + '\n'
+      + 'if there are no bids the item will be transmuted and mana sold at the end of the raid.' + '\n'
+      + 'Only those eligible to wear or use a certain item may bid on a certain item.' + '\n'
+      + 'minimum bids for any item is 1p with minimum increments of 1p' + '\n'
+      + 'at the end of the raid all platinum from those bids are split among the remaining members of the raid via the /split command';
   }
 
   modelToHTTPModel(m: any) {
@@ -135,7 +138,24 @@ export class NewraidComponent implements OnInit {
   }
 
   createRaid() {
+    this.alerts = [];
     const m = this.modelToHTTPModel(this.model);
+    if (m.world === '') {
+      this.alerts.push({type: 'danger', message: 'No world selected'});
+      return;
+    }
+    if (m.description === '') {
+      this.alerts.push({type: 'danger', message: 'No description provided'});
+      return;
+    }
+    if (m.title === '') {
+      this.alerts.push({type: 'danger', message: 'Title is empty'});
+      return;
+    }
+    if ((this.model.date.year === undefined) || (this.model.date.month === undefined) || (this.model.date.day === undefined)) {
+      this.alerts.push({type: 'danger', message: 'No date picked'});
+      return;
+    }
     this.raidService.create(m).subscribe(data => {
       this.router.navigate(['/raids', data.id]);
     });
@@ -144,3 +164,12 @@ export class NewraidComponent implements OnInit {
 
 }
 
+interface Alert {
+  type: string;
+  message: string;
+}
+
+interface ModelDate {
+  year: number;
+  month: number;
+}
