@@ -1,0 +1,73 @@
+{
+  "index": "/index.html",
+  "assetGroups": [{
+    "name": "app",
+    "installMode": "prefetch",
+    "resources": {
+      "files": [
+        "/favicon.ico",
+        "/index.html",
+        "/*.css",
+        "/*.js"
+      ]
+    }
+  }, {
+    "name": "assets",
+    "installMode": "lazy",
+    "updateMode": "prefetch",
+    "resources": {
+      "files": [
+        "/assets/**"
+      ]
+    }
+  }],
+  "dataGroups": [{
+    "name": "classes",
+    "urls": [
+      "/api/v1/defaults/classes"
+    ],
+    "version": 1,
+    "cacheConfig": {
+      "maxSize": 30,
+      "maxAge": "7d",
+      "timeout": "10s",
+      "strategy": "performance"
+    }
+  },{
+    "name": "raids",
+    "urls": [
+      "/api/v1/raids/**"
+    ],
+    "version": 1,
+    "cacheConfig": {
+      "maxSize": 30,
+      "maxAge": "1d",
+      "timeout": "10s",
+      "strategy": "freshness"
+    }
+  },{
+    "name": "raiders",
+    "urls": [
+      "/api/v1/raiders/**"
+    ],
+    "version": 1,
+    "cacheConfig": {
+      "maxSize": 30,
+      "maxAge": "1h",
+      "timeout": "10s",
+      "strategy": "freshness"
+    }
+  },{
+    "name": "raidnotes",
+    "urls": [
+      "/api/v1/raidnotes/**"
+    ],
+    "version": 1,
+    "cacheConfig": {
+      "maxSize": 30,
+      "maxAge": "5m",
+      "timeout": "10s",
+      "strategy": "freshness"
+    }
+  }]
+}

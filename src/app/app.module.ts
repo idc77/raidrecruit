@@ -22,6 +22,8 @@ import {RaidnotesComponent} from './components/raidnotes/raidnotes.component';
 import {RaidWorldFilterPipe} from './pipes/raid-world-filter.pipe';
 import { FooterComponent } from './components/footer/footer.component';
 import { TermsofserviceComponent } from './components/termsofservice/termsofservice.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { TermsofserviceComponent } from './components/termsofservice/termsofserv
     HttpClientModule,
     FormsModule,
     OAuthModule.forRoot(),
+    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
     {
