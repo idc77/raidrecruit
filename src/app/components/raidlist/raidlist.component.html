@@ -27,7 +27,7 @@
             <div class="card-text">
               <h6>{{raid.world}}</h6>
               <p><strong class="badge badge-secondary">{{raid.date_meet|date:'full'}}</strong> &mdash; <strong class="badge badge-secondary">{{raid.date_end|date:'mediumTime'}}</strong></p>
-              <button class="btn btn-block btn-outline-primary" [routerLink]="raid.id">Details</button>
+              <button class="btn btn-block btn-outline-primary" [routerLink]="'/raids/' + raid.id">Details</button>
             </div>
           </div>
         </div>

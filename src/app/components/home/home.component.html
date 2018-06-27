@@ -1,16 +1,14 @@
 <main role="main">
-
-  <!-- Main jumbotron for a primary marketing message or call to action -->
   <div class="jumbotron">
     <div class="container">
-      <h1 class="display-3">Everquest 2 Raidmanager</h1>
+      <h1 class="display-3">Everquest&reg; II Raid Manager</h1>
       <small>beta</small>
-      <p>Everquest 2 Raidmanager is a web-application that tries to bring people who like to raid in Everquest 2 together.</p>
-      <p><button class="btn btn-primary btn-lg" role="button" routerLink="about">Learn more &raquo;</button></p>
+      <p class="lead">Everquest&reg; II Raidmanager is a web-application that tries to bring people who like to raid in Everquest 2 together.</p>
+      <p>Once signed up anyone can both create a raid, join/leave a raid and add characters to their profile.</p>
+      <p>
+        <button class="btn btn-primary btn-lg" role="button" (click)="login()">Create Account Now</button>
+      </p>
     </div>
   </div>
-
 </main>
-
 <icod-raidlist selected_world="Fallen Gate"></icod-raidlist>
-

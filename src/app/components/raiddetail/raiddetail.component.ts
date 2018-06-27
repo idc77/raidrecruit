@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, ParamMap, Params, Router} from '@angular/router';
 import {OAuthService} from 'angular-oauth2-oidc';
 import {RaidGroup, RaidGroupRules, Raid, RaidService, RaidSetup} from '../../services/raid.service';
 import {Claims} from '../../claims';
 import {Raider, RaiderService} from '../../services/raider.service';
 import {RaidClass, RaidClassService} from '../../services/raidclass.service';
+import {RaidnotesComponent} from '../raidnotes/raidnotes.component';
 
 @Component({
   selector: 'icod-raiddetail',
@@ -13,11 +14,15 @@ import {RaidClass, RaidClassService} from '../../services/raidclass.service';
 })
 export class RaiddetailComponent implements OnInit {
 
+  @ViewChild(RaidnotesComponent)
+    private raidnotesComponent: RaidnotesComponent;
+
   raid: Raid = null;
   raiders: Raider[] = null;
-  selected_raider: Raider = null;
-  _user_id: string;
   classes: RaidClass[] = null;
+
+  private _user_id: string;
+  private _selected_raider: Raider = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -136,163 +141,17 @@ export class RaiddetailComponent implements OnInit {
   }
 
   joinRaid(spot: string) {
-    switch (spot) {
-      case 'mt.tank':
-        this.raid.setup.mt.slot_1 = this.selected_raider.character.displayname;
-        break;
-      case 'mt.dirge_or_bard':
-        this.raid.setup.mt.slot_2 = this.selected_raider.character.displayname;
-        break;
-      case 'mt.coercer_or_enchanter':
-        this.raid.setup.mt.slot_3 = this.selected_raider.character.displayname;
-        break;
-      case 'mt.templar_or_healer':
-        this.raid.setup.mt.slot_4 = this.selected_raider.character.displayname;
-        break;
-      case 'mt.defiler_or_warder':
-        this.raid.setup.mt.slot_5 = this.selected_raider.character.displayname;
-        break;
-      case 'mt.swash_or_hatetransfer':
-        this.raid.setup.mt.slot_6 = this.selected_raider.character.displayname;
-        break;
-      case 'ot.tank':
-        this.raid.setup.ot.slot_1 = this.selected_raider.character.displayname;
-        break;
-      case 'ot.dirge_or_bard':
-        this.raid.setup.ot.slot_2 = this.selected_raider.character.displayname;
-        break;
-      case 'ot.coercer_or_enchanter':
-        this.raid.setup.ot.slot_3 = this.selected_raider.character.displayname;
-        break;
-      case 'ot.shaman_or_healer':
-        this.raid.setup.ot.slot_4 = this.selected_raider.character.displayname;
-        break;
-      case 'ot.cleric_or_healer':
-        this.raid.setup.ot.slot_5 = this.selected_raider.character.displayname;
-        break;
-      case 'ot.dps_or_hatetransfer':
-        this.raid.setup.ot.slot_6 = this.selected_raider.character.displayname;
-        break;
-      case 'dps_1.dps_or_tank':
-        this.raid.setup.dps_1.slot_1 = this.selected_raider.character.displayname;
-        break;
-      case 'dps_1.dps':
-        this.raid.setup.dps_1.slot_2 = this.selected_raider.character.displayname;
-        break;
-      case 'dps_1.bard':
-        this.raid.setup.dps_1.slot_3 = this.selected_raider.character.displayname;
-        break;
-      case 'dps_1.enchanter':
-        this.raid.setup.dps_1.slot_4 = this.selected_raider.character.displayname;
-        break;
-      case 'dps_1.healer_or_dps':
-        this.raid.setup.dps_1.slot_5 = this.selected_raider.character.displayname;
-        break;
-      case 'dps_1.healer':
-        this.raid.setup.dps_1.slot_6 = this.selected_raider.character.displayname;
-        break;
-      case 'dps_2.dps_or_tank':
-        this.raid.setup.dps_2.slot_1 = this.selected_raider.character.displayname;
-        break;
-      case 'dps_2.dps':
-        this.raid.setup.dps_2.slot_2 = this.selected_raider.character.displayname;
-        break;
-      case 'dps_2.bard':
-        this.raid.setup.dps_2.slot_3 = this.selected_raider.character.displayname;
-        break;
-      case 'dps_2.enchanter':
-        this.raid.setup.dps_2.slot_4 = this.selected_raider.character.displayname;
-        break;
-      case 'dps_2.healer_or_dps':
-        this.raid.setup.dps_2.slot_5 = this.selected_raider.character.displayname;
-        break;
-      case 'dps_2.healer':
-        this.raid.setup.dps_2.slot_6 = this.selected_raider.character.displayname;
-        break;
-    }
-    this.raidService.update(this.raid.id, this.raid).subscribe(data => {
+    this.raidService.join(this.raid.id, spot, this.selected_raider.character.displayname).subscribe((data) => {
       this.raid = data;
     });
+    this.raidnotesComponent.update();
   }
 
   leaveRaid(spot: string) {
-    switch (spot) {
-      case 'mt.tank':
-        this.raid.setup.mt.slot_1 = '';
-        break;
-      case 'mt.dirge_or_bard':
-        this.raid.setup.mt.slot_2 = '';
-        break;
-      case 'mt.coercer_or_enchanter':
-        this.raid.setup.mt.slot_3 = '';
-        break;
-      case 'mt.templar_or_healer':
-        this.raid.setup.mt.slot_4 = '';
-        break;
-      case 'mt.defiler_or_warder':
-        this.raid.setup.mt.slot_5 = '';
-        break;
-      case 'mt.swash_or_hatetransfer':
-        this.raid.setup.mt.slot_6 = '';
-        break;
-      case 'ot.tank':
-        this.raid.setup.ot.slot_1 = '';
-        break;
-      case 'ot.dirge_or_bard':
-        this.raid.setup.ot.slot_2 = '';
-        break;
-      case 'ot.coercer_or_enchanter':
-        this.raid.setup.ot.slot_3 = '';
-        break;
-      case 'ot.shaman_or_healer':
-        this.raid.setup.ot.slot_4 = '';
-        break;
-      case 'ot.cleric_or_healer':
-        this.raid.setup.ot.slot_5 = '';
-        break;
-      case 'ot.dps_or_hatetransfer':
-        this.raid.setup.ot.slot_6 = '';
-        break;
-      case 'dps_1.dps_or_tank':
-        this.raid.setup.dps_1.slot_1 = '';
-        break;
-      case 'dps_1.dps':
-        this.raid.setup.dps_1.slot_2 = '';
-        break;
-      case 'dps_1.bard':
-        this.raid.setup.dps_1.slot_3 = '';
-        break;
-      case 'dps_1.enchanter':
-        this.raid.setup.dps_1.slot_4 = '';
-        break;
-      case 'dps_1.healer_or_dps':
-        this.raid.setup.dps_1.slot_5 = '';
-        break;
-      case 'dps_1.healer':
-        this.raid.setup.dps_1.slot_6 = '';
-        break;
-      case 'dps_2.dps_or_tank':
-        this.raid.setup.dps_2.slot_1 = '';
-        break;
-      case 'dps_2.dps':
-        this.raid.setup.dps_2.slot_2 = '';
-        break;
-      case 'dps_2.bard':
-        this.raid.setup.dps_2.slot_3 = '';
-        break;
-      case 'dps_2.enchanter':
-        this.raid.setup.dps_2.slot_4 = '';
-        break;
-      case 'dps_2.healer_or_dps':
-        this.raid.setup.dps_2.slot_5 = '';
-        break;
-      case 'dps_2.healer':
-        this.raid.setup.dps_2.slot_6 = '';
-        break;
-    }
-    this.raidService.update(this.raid.id, this.raid).subscribe(data => {
+    this.raidService.leave(this.raid.id, spot).subscribe(data => {
       this.raid = data;
     });
+    this.raidnotesComponent.update();
   }
 
   isSigned(): boolean {
@@ -370,6 +229,19 @@ export class RaiddetailComponent implements OnInit {
     this.raidService.remove(this.raid.id).subscribe(() => {
       this.router.navigate(['']);
     });
+  }
+
+  set selected_raider(raider: Raider) {
+    if (this.raid.world) {
+      if (this.raid.world !== raider.character.locationdata.world) {
+        return;
+      }
+    }
+    this._selected_raider = raider;
+  }
+
+  get selected_raider(): Raider {
+    return this._selected_raider;
   }
 
 }

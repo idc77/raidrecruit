@@ -12,7 +12,6 @@ export class RaidnotesComponent implements OnInit {
 
   notes: RaidNote[];
   model: RaidNote = new RaidNote();
-  claims: Claims = null;
   alerts: Alert[] = [];
 
   private _raider: Raider = null;
@@ -57,6 +56,10 @@ export class RaidnotesComponent implements OnInit {
     });
   }
 
+  update() {
+    this.raidNoteService.list(this.model.raid_id).subscribe(data => this.notes = data);
+  }
+
 }
 
 interface Alert {
@@ -64,22 +67,3 @@ interface Alert {
   message: string;
 }
 
-/*
-ngOnChanges(changes: SimpleChanges) {
-  for (const prop in changes) {
-    switch (prop) {
-      case 'raid_id':
-        if (changes[prop].currentValue !== undefined) {
-          this.model.raid_id = this.raid_id;
-          this.raidNoteService.list(this.raid_id).subscribe(data => this.notes = data);
-        }
-        break;
-      case 'raider':
-        if ((changes[prop].currentValue !== null) && (changes[prop].currentValue !== undefined)) {
-          this.model.username = this.raider.character.displayname;
-        }
-        break;
-    }
-  }
-}
-*/

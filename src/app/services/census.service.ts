@@ -14,6 +14,10 @@ export class CensusService {
   search(q: SearchQuery) {
     return this.http.post<CensusResult>(environment.apiroot + '/census/search', q);
   }
+
+  update(id: number) {
+    return this.http.get<CensusResult>(environment.apiroot + '/census/update/' + id.toString());
+  }
 }
 
 export class CensusResult {

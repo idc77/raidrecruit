@@ -30,6 +30,16 @@ export class RaidService {
   remove(id: string) {
     return this.http.delete(environment.apiroot + '/raids/' + id);
   }
+
+  join(raid_id, spot, displayname) {
+    const payload = {raid_id: raid_id, spot: spot, displayname: displayname};
+    return this.http.post<Raid>(environment.apiroot + '/tools/joinraid', payload);
+  }
+
+  leave(raid_id, spot) {
+    const payload = {raid_id: raid_id, spot: spot};
+    return this.http.post<Raid>(environment.apiroot + '/tools/leaveraid', payload);
+  }
 }
 
 export class Raid {

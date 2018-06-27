@@ -26,18 +26,16 @@
   </div>
   <div class="row">
     <div class="col-12">
-      <div class="card-columns">
-        <div class="card" *ngFor="let note of notes">
-          <div class="card-body">
-            <h5 class="card-title">{{note.username}}</h5>
-            <p class="card-text">{{note.note}}</p>
-          </div>
-          <div class="card-footer">
-            <small class="text-muted">{{note.date|date:'short'}}</small>
-          </div>
+      <div class="card" *ngFor="let note of notes">
+        <div class="card-body">
+          <h5 class="card-title">{{note.username}}</h5>
+          <p class="card-text">{{note.note}}</p>
+        </div>
+        <div class="card-footer">
+          <small class="text-muted">{{note.date|date:'short'}}</small>
         </div>
       </div>
     </div>
   </div>
-<hr>
+  <hr>
 </div>
