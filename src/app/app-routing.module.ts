@@ -11,6 +11,7 @@ import {AddraiderComponent} from './components/addraider/addraider.component';
 import {HomeComponent} from './components/home/home.component';
 import {PrivacypolicyComponent} from './components/privacypolicy/privacypolicy.component';
 import {TermsofserviceComponent} from './components/termsofservice/termsofservice.component';
+import {NotFoundComponent} from './components/not-found/not-found.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -23,7 +24,7 @@ const routes: Routes = [
   {path: 'new', component: NewraidComponent, canActivate: [AuthGuard]},
   {path: 'privacy-policy', component: PrivacypolicyComponent},
   {path: 'terms-of-service', component: TermsofserviceComponent},
-  {path: '**', redirectTo: '', pathMatch: 'full'}
+  {path: '**', component: NotFoundComponent}
 ];
 
 @NgModule({

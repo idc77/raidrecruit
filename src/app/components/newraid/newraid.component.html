@@ -258,18 +258,6 @@
         </div>
       </div>
     </fieldset>
-    <fieldset>
-      <legend>
-        Sitters
-      </legend>
-      <div class="form-group">
-        <label for="sitting">
-          How many slots would you like to make available for sitters?
-          Note: They usually have a right to roll on loot because they're available to swap out.
-        </label>
-        <input name="sitsize" type="number" class="form-control" id="sitting" [(ngModel)]="model.setup.sitsize">
-      </div>
-    </fieldset>
     <div class="row" *ngIf="alerts">
       <div class="col-12">
         <div *ngFor="let alert of alerts">

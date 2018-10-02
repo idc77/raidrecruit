@@ -20,10 +20,14 @@ import {AddraiderComponent} from './components/addraider/addraider.component';
 import {PrivacypolicyComponent} from './components/privacypolicy/privacypolicy.component';
 import {RaidnotesComponent} from './components/raidnotes/raidnotes.component';
 import {RaidWorldFilterPipe} from './pipes/raid-world-filter.pipe';
-import { FooterComponent } from './components/footer/footer.component';
-import { TermsofserviceComponent } from './components/termsofservice/termsofservice.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
+import {FooterComponent} from './components/footer/footer.component';
+import {TermsofserviceComponent} from './components/termsofservice/termsofservice.component';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
+import {Angulartics2Module} from 'angulartics2';
+import {Angulartics2GoogleTagManager} from 'angulartics2/gtm';
+import {AdsenseModule} from 'ng2-adsense';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +46,7 @@ import { environment } from '../environments/environment';
     RaidWorldFilterPipe,
     FooterComponent,
     TermsofserviceComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +55,13 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     FormsModule,
     OAuthModule.forRoot(),
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
+    Angulartics2Module.forRoot([Angulartics2GoogleTagManager]),
+    AdsenseModule.forRoot({
+      adClient: 'ca-pub-2407608926817305',
+      adFormat: 'auto',
+      display: 'block',
+    }),
+    ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
   ],
   providers: [
     {
