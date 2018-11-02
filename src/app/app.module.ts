@@ -55,7 +55,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     HttpClientModule,
     FormsModule,
     OAuthModule.forRoot(),
-    Angulartics2Module.forRoot([Angulartics2GoogleTagManager]),
+    Angulartics2Module.forRoot(),
     AdsenseModule.forRoot({
       adClient: 'ca-pub-2407608926817305',
       adFormat: 'auto',

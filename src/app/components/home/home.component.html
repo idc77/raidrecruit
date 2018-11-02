@@ -2,10 +2,11 @@
   <div class="jumbotron">
     <div class="container">
       <h1 class="display-3">Everquest&reg; II Raid Manager</h1>
-      <p class="lead">Everquest&reg; II Raidmanager is a web-application that tries to bring people who like to raid in Everquest 2 together.</p>
-      <p>Once signed up anyone can both create a raid, join/leave a raid and add characters to their profile.</p>
+      <p class="lead">Everquest&reg; II Raidmanager tries to bring people together who like to raid in Everquest 2.</p>
+      <p>Once signed up anyone can create a raid, join/leave a raid, leave notes and add characters to their profile.</p>
       <p>
-        <button class="btn btn-primary btn-lg" role="button" (click)="login()">Create Account Now</button>
+        <button *ngIf="!isLoggedin()" class="btn btn-primary btn-lg" role="button" (click)="login()">Create Account Now</button>
+        <button *ngIf="isLoggedin()" class="btn btn-primary btn-lg" role="button" (click)="gotoNewRaid()">Plan New Raid</button>
       </p>
     </div>
   </div>
